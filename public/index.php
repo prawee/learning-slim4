@@ -3,17 +3,23 @@
  * @ Author: Prawee Wongsa (prawee@hotmail.com)
  * @ Create Time: 2022-03-31 02:31:51
  * @ Modified by: Prawee@hotmial.com
- * @ Modified time: 2022-03-31 02:54:51
+ * @ Modified time: 2022-03-31 03:10:52
  * @ Description: loading name and packages
  */
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
-
+use DI\Container;
 /**
  * Loading all dependencies
  */
 require __DIR__.'/../vendor/autoload.php';
+
+/**
+ * Dependencies injection
+ */
+$container = new Container();
+AppFactory::setContainer($container);
 
 /**
  * Create application from slim factory
