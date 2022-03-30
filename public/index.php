@@ -3,7 +3,7 @@
  * @ Author: Prawee Wongsa (prawee@hotmail.com)
  * @ Create Time: 2022-03-31 02:31:51
  * @ Modified by: Prawee@hotmial.com
- * @ Modified time: 2022-03-31 03:10:52
+ * @ Modified time: 2022-03-31 03:43:07
  * @ Description: loading name and packages
  */
 use Psr\Http\Message\ResponseInterface as Response;
@@ -19,6 +19,14 @@ require __DIR__.'/../vendor/autoload.php';
  * Dependencies injection
  */
 $container = new Container();
+$container->set('templating', function() {
+    return new Mustache_Engine([
+        'loader' => new Mustache_Loader_FilesystemLoader(
+            __DIR__.'/../templates',
+            ['extension' => '']
+        )
+    ]);
+});
 AppFactory::setContainer($container);
 
 /**
@@ -40,8 +48,12 @@ $app->get('/hello/pod', function(Request $request, Response $response) {
 });
 
 $app->get('/hello/{name}', function(Request $request, Response $response, array $args) {
-    $name = ucfirst($args['name']);
-    $response->getBody()->write(sprintf("Hello, %s!", $name));
+    // $name = ucfirst($args['name']);
+    // $response->getBody()->write(sprintf("Hello, %s!", $name));
+    $html = $this->get('templating')->render('hello.html', [
+        'name' => ucfirst($args['name']),
+    ]);
+    $response->getBody()->write($html);
     return $response;
 });
 
