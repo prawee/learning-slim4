@@ -3,7 +3,7 @@
  * @ Author: Prawee Wongsa (prawee@hotmail.com)
  * @ Create Time: 2022-03-31 02:31:51
  * @ Modified by: Prawee@hotmial.com
- * @ Modified time: 2022-03-31 03:43:07
+ * @ Modified time: 2022-03-31 04:17:01
  * @ Description: loading name and packages
  */
 use Psr\Http\Message\ResponseInterface as Response;
@@ -37,10 +37,11 @@ $app = AppFactory::create();
 /**
  * Simple route with hello world
  */
-$app->get('/', function(Request $request, Response $response) {
-    $response->getBody()->write("Hello, World!");
-    return $response;
-});
+// $app->get('/', function(Request $request, Response $response) {
+//     $response->getBody()->write("Hello, World!");
+//     return $response;
+// });
+$app->get('/', '\App\Controller\FirstController:homepage');
 
 $app->get('/hello/pod', function(Request $request, Response $response) {
     $response->getBody()->write("Hello, Pod!");
